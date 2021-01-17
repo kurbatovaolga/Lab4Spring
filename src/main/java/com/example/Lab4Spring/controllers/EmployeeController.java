@@ -1,6 +1,6 @@
 package com.example.Lab4Spring.controllers;
 
-import com.example.Lab4Spring.entity.Employee;
+import com.example.Lab4Spring.entity.*;
 import com.example.Lab4Spring.jms.JmsSender;
 import com.example.Lab4Spring.repos.EmployeeRepo;
 import org.springframework.beans.BeanUtils;
