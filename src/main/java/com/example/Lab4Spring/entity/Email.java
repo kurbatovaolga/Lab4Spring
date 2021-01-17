@@ -5,48 +5,36 @@ import javax.persistence.*;
 @Table(schema="public",name="email")
 public class Email {
     @Id
-    @Column(name = "id", nullable = false, unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private String id;
 
-    @Column(name = "receiver")
-    private String receiver;
-    @Column(name = "subject")
-    private String subject;
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "body")
     private String body;
 
-    public Email() {
-    }
+    public Email() { }
 
-    public Email(String receiver, String subject, String body) {
-        this.receiver = receiver;
-        this.subject = subject;
+    public Email(String id, String body) {
+        this.id = id;
         this.body = body;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getReceiver() {
-        return receiver;
+    public String getEmail() {
+        return email;
     }
 
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getBody() {
@@ -55,10 +43,5 @@ public class Email {
 
     public void setBody(String body) {
         this.body = body;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Email{to=%s, body=%s}", receiver, body);
     }
 }

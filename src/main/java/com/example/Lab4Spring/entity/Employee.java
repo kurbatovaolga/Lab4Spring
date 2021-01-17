@@ -14,7 +14,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(Views.Id.class)
-    private Long id;
+    private int id;
     @JsonView(Views.IdName.class)
     private String text;
 
@@ -24,11 +24,11 @@ public class Employee {
     private LocalDateTime creationDate;
 
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

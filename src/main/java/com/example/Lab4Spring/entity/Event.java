@@ -6,49 +6,26 @@ import javax.persistence.*;
 @Entity
 @Table(schema = "public", name = "event")
 public class Event {
+
     @Id
-    @Column(name = "id", nullable = false, unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private String id;
 
-    @Enumerated(EnumType.STRING)
-    private EventType eventType;
+    @Column(name = "event_type")
+    private String eventType;
 
-    @Column(name="entity_class")
+    @Column(name = "entity_class")
     private String entityClass;
 
-    @Column(name="entity")
-    private String entity;
+    @Column(name = "entity_field")
+    private String entityField;
 
-    public Long getId() {
-        return id;
-    }
+    public Event(){}
 
-    public void setId(Long id) {
+    public Event(String id, String eventType, String entityClass, String entityField) {
         this.id = id;
-    }
-
-    public EventType getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(EventType eventType) {
         this.eventType = eventType;
-    }
-
-    public String getEntityClass() {
-        return entityClass;
-    }
-
-    public void setEntityClass(String entityClass) {
         this.entityClass = entityClass;
-    }
-
-    public String getEntity() {
-        return entity;
-    }
-
-    public void setEntity(String entity) {
-        this.entity = entity;
+        this.entityField = entityField;
     }
 }

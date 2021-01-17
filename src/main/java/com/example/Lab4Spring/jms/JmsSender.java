@@ -1,37 +1,36 @@
 package com.example.Lab4Spring.jms;
 
+import com.example.Lab4Spring.entity.BasicEntity;
 import com.example.Lab4Spring.entity.Email;
-import com.example.Lab4Spring.entity.Employee;
 import com.example.Lab4Spring.entity.Event;
-import com.example.Lab4Spring.entity.EventType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+import java.util.UUID;
+
 @Service
 public class JmsSender {
-
     private final JmsTemplate jmsTemplate;
 
     @Autowired
-    public JmsSender(JmsTemplate jmsTemplate){
-        this.jmsTemplate= jmsTemplate;
+    public JmsSender(JmsTemplate jmsTemplate) {
+        this.jmsTemplate = jmsTemplate;
     }
-    public void sendEmployeeUpdate (Employee employee, EventType eventType){
-        Email email = new Email();
-        email.setReceiver("usertest2121esa@gmail.com");
-        email.setSubject("Внесены [" + eventType.name() + ']');
-        String body = String.format(
-                employee.getText());
-        email.setBody(body);
-        jmsTemplate.convertAndSend("mailbox", email);
-    }
-    public <T> void sendEvent(Class<T> entityClass, T entity, EventType eventType){
-        Event event = new Event();
-        event.setEventType(eventType);
-        event.setEntity(entity.toString());
-        event.setEntityClass(entityClass.getSimpleName());
-        jmsTemplate.convertAndSend("eventbox", event);
-    }
-}
 
+    public void sendObjectUpdate(BasicEntity object, String changeType) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> objectMap = objectMapper.convertValue(object, Map.class);
+        for (String fieldName : objectMap.keySet()) {
+            Event event = new Event(UUID.randomUUID().toString(), changeType, object.getTableName(), fieldName);
+            jmsTemplate.convertAndSend("events",event);
+        }
+    }
+
+    public void sendEmail(Email email){
+        jmsTemplate.convertAndSend("emails",email);
+    }
+
+}
