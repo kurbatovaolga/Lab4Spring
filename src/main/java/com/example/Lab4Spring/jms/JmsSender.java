@@ -20,11 +20,11 @@ public class JmsSender {
         this.jmsTemplate = jmsTemplate;
     }
 
-    public void sendObjectUpdate(BasicEntity object, String changeType) {
+    public void sendObjectUpdate(BasicEntity object, String eventType) {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> objectMap = objectMapper.convertValue(object, Map.class);
         for (String fieldName : objectMap.keySet()) {
-            Event event = new Event(UUID.randomUUID().toString(), changeType, object.getTableName(), fieldName);
+            Event event = new Event(UUID.randomUUID().toString(), eventType, object.getTableName(), fieldName);
             jmsTemplate.convertAndSend("events",event);
         }
     }

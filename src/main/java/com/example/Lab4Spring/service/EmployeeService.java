@@ -4,6 +4,7 @@ import com.example.Lab4Spring.entity.Employee;
 
 import java.util.List;
 
+
 public interface EmployeeService {
     void create(Employee employee);
 
